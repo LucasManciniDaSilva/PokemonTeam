@@ -6,10 +6,13 @@ logging:
   level:
     root: ${ROOT_LOG_LEVEL:info}
   pattern:
-    console: "[%thread][%highlight(%-5level)][%cyan(%d{yyyy-MM-dd HH:mm:ss})][%yellow(%X{requestId})][%magenta(%logger{40})] - %msg%n"
+    console: "[%thread][%highlight(%-5level)][%blue(%d{yyyy-MM-dd HH:mm:ss})][%blue(%X{requestId})][%green(%logger{40})] - %msg%n"
 management:
   endpoints:
     web:
       exposure:
         include: "info,health"
 spring:
+  data.mongodb:
+    port: 27017
+    database: pokemon-team-mongodb

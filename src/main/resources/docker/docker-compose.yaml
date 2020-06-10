@@ -1,16 +1,14 @@
-version: '3'
+version: "3"
 services:
-  mongo-express:
-    image: mongo-express
-    ports:
-      - 8081:8081
+  mongo:
+    image: mongo
+    container_name: pokemon-dream-team
     environment:
-      ME_CONFIG_BASICAUTH_USERNAME: blue
-      ME_CONFIG_BASICAUTH_PASSWORD: blue
-      ME_CONFIG_MONGODB_PORT: 27017
-      ME_CONFIG_MONGODB_ADMINUSERNAME: red
-      ME_CONFIG_MONGODB_ADMINPASSWORD: red
-    links:
-      - mongo
+       - MONGO_INITDB_DATABASE= pokemon-team-mongodb
+    ports:
+      - 27017:27017
     networks:
-      - mongo-compose-network
+      - spring-mongo-net
+networks:
+  spring-mongo-net:
+    driver: bridge
