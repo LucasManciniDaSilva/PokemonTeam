@@ -1,0 +1,15 @@
+server:
+  port: ${SERVER_PORT:8090}
+  servlet:
+    context-path: /pokemon-team/v1
+logging:
+  level:
+    root: ${ROOT_LOG_LEVEL:info}
+  pattern:
+    console: "[%thread][%highlight(%-5level)][%cyan(%d{yyyy-MM-dd HH:mm:ss})][%yellow(%X{requestId})][%magenta(%logger{40})] - %msg%n"
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "info,health"
+spring:
