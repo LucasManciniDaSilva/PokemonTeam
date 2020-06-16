@@ -13,6 +13,8 @@ management:
       exposure:
         include: "info,health"
 spring:
-  data.mongodb:
-    port: 27017
-    database: pokemon-team-mongodb
+  data:
+      mongodb:
+        database: pokemon-team-mongodb
+        port: 27017
+        host: localhost
