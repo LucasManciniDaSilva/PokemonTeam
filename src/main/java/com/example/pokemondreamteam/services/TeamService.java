@@ -1,17 +1,20 @@
 package com.example.pokemondreamteam.services;
 
-import com.example.pokemondreamteam.documents.TeamDocument;
-import com.example.pokemondreamteam.interfaces.json.Team;
-import com.example.pokemondreamteam.interfaces.json.TeamPost;
-import com.example.pokemondreamteam.interfaces.response.TeamResponse;
+import com.example.pokemondreamteam.interfaces.json.Team.Team;
+import com.example.pokemondreamteam.interfaces.json.Team.TeamPost;
+import com.example.pokemondreamteam.interfaces.json.Team.TeamPut;
 import org.bson.types.ObjectId;
-
-import java.util.Optional;
+import org.springframework.transaction.annotation.Transactional;
 
 
 public interface TeamService {
 
-    TeamResponse teamPost(TeamPost teamPost);
-    TeamDocument getTeam(ObjectId _id);
-    Team getTeamById(ObjectId _id);
+    Team teamPost(TeamPost teamPost);
+    Team getTeam(ObjectId _id);
+
+    @Transactional
+    Team putTeam(ObjectId _id, TeamPut teamPut);
+
+    @Transactional
+    void deleteTeam(ObjectId _id);
 }

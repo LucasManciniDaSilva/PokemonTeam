@@ -1,5 +1,5 @@
 server:
-  port: ${SERVER_PORT:8090}
+  port: ${SERVER_PORT:8080}
   servlet:
     context-path: /pokemon-team/v1
 logging:
@@ -14,7 +14,10 @@ management:
         include: "info,health"
 spring:
   data:
-      mongodb:
-        database: pokemon-team-mongodb
-        port: 27017
-        host: localhost
+    mongodb:
+      database: pokemon-team-mongodb
+      port: 27017
+      host: localhost
+pokeapi:
+  urlPokemon: ${POKEAPI_URL:https://pokeapi.co/api/v2/pokemon/}
+  urlAbilities:  ${POKEAPI_URL:https://pokeapi.co/api/v2/ability/}

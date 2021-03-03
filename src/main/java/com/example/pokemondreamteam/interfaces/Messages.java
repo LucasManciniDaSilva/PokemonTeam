@@ -7,6 +7,9 @@ public interface Messages {
     String REQUIRED_PARAM = "400.003";
     String REQUIRED_REQUEST_BODY = "400.005";
 
+    //404
+    String POKEMON_TEAM_NOT_FOUND = "404.001";
+    String POKEMON_NOT_FOUND = "404.002";
 
     //422
     String CONTACT_SYSTEM_ADMIN = "422.001";

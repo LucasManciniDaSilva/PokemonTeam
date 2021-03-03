@@ -1,17 +1,15 @@
 package com.example.pokemondreamteam.documents;
 
-import com.example.pokemondreamteam.interfaces.json.Team;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.experimental.FieldNameConstants;
+import com.example.pokemondreamteam.interfaces.json.Pokemons.Pokemon;
+import com.example.pokemondreamteam.interfaces.json.Pokemons.PokemonResponse;
+import com.example.pokemondreamteam.interfaces.json.Team.Team;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import lombok.*;
 import org.bson.types.ObjectId;
-import org.springframework.data.annotation.Transient;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.MongoId;
 
-import javax.validation.constraints.Null;
 
 @Data
 @Builder
@@ -20,19 +18,19 @@ import javax.validation.constraints.Null;
 @Document
 public class TeamDocument {
 
-  @MongoId
-  public ObjectId _id;
-  @Transient
-  public String _class;
-  public String firstPokemon;
-  public String secondPokemon;
-  public String thirdPokemon;
-  public String fourthPokemon;
-  public String fifthPokemon;
-  public String lastPokemon;
+  @Id
+  @JsonSerialize(using= ToStringSerializer.class)
+  private ObjectId _id;
+  private Pokemon firstPokemon;
+  private Pokemon secondPokemon;
+  private Pokemon thirdPokemon;
+  private Pokemon fourthPokemon;
+  private Pokemon fifthPokemon;
+  private Pokemon lastPokemon;
 
   public Team toTeam() {
     return Team.builder()
+        ._id(this._id)
         .firstPokemon(this.firstPokemon)
         .secondPokemon(this.secondPokemon)
         .thirdPokemon(this.thirdPokemon)
@@ -41,4 +39,5 @@ public class TeamDocument {
         .lastPokemon(this.lastPokemon)
         .build();
   }
+
 }
