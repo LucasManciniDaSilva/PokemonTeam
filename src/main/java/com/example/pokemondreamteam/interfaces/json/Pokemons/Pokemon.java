@@ -5,6 +5,7 @@ import com.example.pokemondreamteam.interfaces.json.PokemonInfos.Abilities;
 import com.example.pokemondreamteam.interfaces.json.PokemonInfos.Moves;
 import com.example.pokemondreamteam.interfaces.json.PokemonInfos.Stats;
 import com.example.pokemondreamteam.interfaces.json.PokemonInfos.Types;
+import com.example.pokemondreamteam.interfaces.json.Team.TeamPost;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
@@ -13,6 +14,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data

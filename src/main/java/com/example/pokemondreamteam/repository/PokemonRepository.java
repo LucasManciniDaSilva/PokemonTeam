@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 public interface PokemonRepository extends MongoRepository<PokemonDocument, String> {
     Boolean existsByPokemonName(String pokemonName);
     PokemonDocument findByPokemonName(String pokemonName);
+
 }
