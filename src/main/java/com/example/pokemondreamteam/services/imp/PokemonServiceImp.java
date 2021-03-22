@@ -1,6 +1,7 @@
 package com.example.pokemondreamteam.services.imp;
 
 import com.example.pokemondreamteam.documents.TeamDocument;
+import com.example.pokemondreamteam.exceptions.MessageError;
 import com.example.pokemondreamteam.interfaces.json.Pokemons.Pokemon;
 import com.example.pokemondreamteam.interfaces.json.Team.TeamPost;
 import com.example.pokemondreamteam.repository.PokemonRepository;
@@ -15,14 +16,15 @@ import java.util.List;
 public class PokemonServiceImp implements PokemonService {
 
   private final PokemonRepository pokemonRepository;
+  private final MessageError messageError;
 
-  public PokemonServiceImp(PokemonRepository pokemonRepository) {
+  public PokemonServiceImp(PokemonRepository pokemonRepository, MessageError messageError) {
     this.pokemonRepository = pokemonRepository;
+    this.messageError = messageError;
   }
 
   @Override
   public TeamDocument saveTeamSchema(TeamPost teamPost) {
-
     Pokemon firstPokemon =
         this.pokemonRepository
             .findByPokemonName(teamPost.getFirstPokemon().toLowerCase())
@@ -56,7 +58,7 @@ public class PokemonServiceImp implements PokemonService {
         .fifthPokemon(fifthPokemon)
         .lastPokemon(lastPokemon)
         .build();
-  }
+    }
 
   @Override
   public void updateTeam(TeamDocument teamDocument, List<String> teamPatchList) {
