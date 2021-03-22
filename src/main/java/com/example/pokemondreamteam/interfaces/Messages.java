@@ -13,4 +13,5 @@ public interface Messages {
 
     //422
     String CONTACT_SYSTEM_ADMIN = "422.001";
+    String POKEMON_TEAM_ERROR = "422.002";
 }
