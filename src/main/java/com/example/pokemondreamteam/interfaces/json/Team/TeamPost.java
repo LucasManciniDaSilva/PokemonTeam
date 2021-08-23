@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,12 +19,13 @@ import java.util.List;
 @AllArgsConstructor
 public class TeamPost {
 
-  @NotBlank private String firstPokemon;
-  @NotBlank private String secondPokemon;
-  @NotBlank private String thirdPokemon;
-  @NotBlank private String fourthPokemon;
-  @NotBlank private String fifthPokemon;
-  @NotBlank private String lastPokemon;
+  @NotNull
+  private String firstPokemon;
+  @NotNull private String secondPokemon;
+  @NotNull private String thirdPokemon;
+  @NotNull private String fourthPokemon;
+  @NotNull private String fifthPokemon;
+  @NotNull private String lastPokemon;
 
   public List<String> teamPostList(TeamPost teamPost) {
     List<String> teamPostList = new ArrayList<>();
