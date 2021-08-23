@@ -70,7 +70,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     List<ApiError> errors = newArrayList();
     ex.getBindingResult().getFieldErrors().forEach(fe -> {
       errors.add(messageError.create(Messages.FIELD_VALIDATION,
-        format("Field '%s' %s", fe.getField(), fe.getDefaultMessage())));
+        format("Field '%s' %s", fe.getField(), "cannot be null")));
     });
 
     if (errors.isEmpty()) {

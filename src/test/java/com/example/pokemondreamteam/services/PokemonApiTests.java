@@ -5,7 +5,6 @@ import com.example.pokemondreamteam.exceptions.UnprocessableEntityException;
 import com.example.pokemondreamteam.integration.PokemonApi;
 import com.example.pokemondreamteam.interfaces.json.Team.TeamPost;
 import com.example.pokemondreamteam.repository.PokemonRepository;
-import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
