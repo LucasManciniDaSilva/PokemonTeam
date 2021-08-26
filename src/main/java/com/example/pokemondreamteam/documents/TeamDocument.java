@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 
 @Data
@@ -20,19 +21,18 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document
 public class TeamDocument {
 
-  @Id
-  @JsonSerialize(using= ToStringSerializer.class)
-  private ObjectId _id;
   private Pokemon firstPokemon;
   private Pokemon secondPokemon;
   private Pokemon thirdPokemon;
   private Pokemon fourthPokemon;
   private Pokemon fifthPokemon;
   private Pokemon lastPokemon;
+  @Id
+  private String teamName;
 
   public Team toTeam() {
     return Team.builder()
-        ._id(this._id)
+        .teamName(this.teamName)
         .firstPokemon(this.firstPokemon)
         .secondPokemon(this.secondPokemon)
         .thirdPokemon(this.thirdPokemon)

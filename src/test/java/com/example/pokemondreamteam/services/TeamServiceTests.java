@@ -13,7 +13,6 @@ import com.example.pokemondreamteam.interfaces.json.Team.TeamPost;
 import com.example.pokemondreamteam.repository.PokemonRepository;
 import com.example.pokemondreamteam.repository.TeamRepository;
 import com.example.pokemondreamteam.services.imp.TeamServiceImp;
-import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -34,7 +33,7 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class TeamServiceTests {
-  private static ObjectId TEAM_ID;
+  private static String TEAM_NAME;
   private static String POKEMON_NULL;
   private static String FIRST_POKEMON;
   private static String SECOND_POKEMON;
@@ -66,6 +65,7 @@ public class TeamServiceTests {
 
   @BeforeAll
   public static void beforeAll() {
+    TEAM_NAME = "TESTE";
     FIRST_POKEMON = "Squirtle";
     SECOND_POKEMON = "Charmander";
     THIRD_POKEMON = "Bulbasaur";
@@ -73,7 +73,6 @@ public class TeamServiceTests {
     FIFTH_POKEMON = "Abra";
     LAST_POKEMON = "Gastly";
     POKEMON_NULL = "";
-    TEAM_ID = ObjectId.get();
   }
 
   @BeforeEach
@@ -85,6 +84,7 @@ public class TeamServiceTests {
     teamPost =
         spy(
             new TeamPost(
+                TEAM_NAME,    
                 FIRST_POKEMON,
                 SECOND_POKEMON,
                 THIRD_POKEMON,
@@ -94,21 +94,22 @@ public class TeamServiceTests {
     teamPostError =
         spy(
             new TeamPost(
-                FIRST_POKEMON,
-                SECOND_POKEMON,
-                THIRD_POKEMON,
-                FOURTH_POKEMON,
-                POKEMON_NULL,
-                LAST_POKEMON));
+                    TEAM_NAME,
+                    FIRST_POKEMON,
+                    SECOND_POKEMON,
+                    THIRD_POKEMON,
+                    FOURTH_POKEMON,
+                    FIFTH_POKEMON,
+                    LAST_POKEMON));
     teamPatch =
         spy(
             new TeamPatch(
-                FIRST_POKEMON,
-                SECOND_POKEMON,
-                THIRD_POKEMON,
-                FOURTH_POKEMON,
-                FIFTH_POKEMON,
-                LAST_POKEMON));
+                    FIRST_POKEMON,
+                    SECOND_POKEMON,
+                    THIRD_POKEMON,
+                    FOURTH_POKEMON,
+                    FIFTH_POKEMON,
+                    LAST_POKEMON));
     teamListPatch = teamPatch.teamPatchList(teamPatch);
   }
 
@@ -124,37 +125,37 @@ public class TeamServiceTests {
   @DisplayName("Should get team successfully")
   @Test
   public void getTeamSuccessfully() {
-    when(teamRepository.findBy_id(team.get_id())).thenReturn(Optional.of(teamDocument));
+    when(teamRepository.findByTeamName(team.getTeamName())).thenReturn(Optional.of(teamDocument));
     when(teamDocument.toTeam()).thenReturn(team);
-    assertEquals(team, teamService.getTeam(team.get_id()));
+    assertEquals(team, teamService.getTeam(team.getTeamName()));
   }
 
   @DisplayName("Should update team successfully")
   @Test
   public void updateTeamSuccessfully() {
-    when(teamRepository.findBy_id(team.get_id())).thenReturn(Optional.of(teamDocument));
+    when(teamRepository.findByTeamName(team.getTeamName())).thenReturn(Optional.of(teamDocument));
     pokemonService.updateTeam(teamDocument, teamListPatch);
     when(teamRepository.save(teamDocument)).thenReturn(teamDocument);
     when(teamDocument.toTeam()).thenReturn(team);
-    assertEquals(team, teamService.patchTeam(team.get_id(), teamPatch));
+    assertEquals(team, teamService.patchTeam(team.getTeamName(), teamPatch));
   }
 
   @DisplayName("Should delete team successfully")
   @Test
   public void deleteTeamSuccessfully() {
-    when(teamRepository.findBy_id(team.get_id())).thenReturn(Optional.of(teamDocument));
+    when(teamRepository.findByTeamName(team.getTeamName())).thenReturn(Optional.of(teamDocument));
     teamRepository.delete(teamDocument);
-    teamService.deleteTeam(team.get_id());
+    teamService.deleteTeam(team.getTeamName());
   }
 
   @DisplayName("Should throw an exception when try to get a team with a teamId not found")
   @Test
   public void getTeamWithTeamIdNotFound() {
-    ObjectId teamId = TEAM_ID;
+    String teamId = TEAM_NAME;
 
     when(messageError.create(any(), any())).thenReturn(apiError);
 
-    when(teamRepository.findBy_id(teamId)).thenReturn(Optional.empty());
+    when(teamRepository.findByTeamName(teamId)).thenReturn(Optional.empty());
 
     assertThatThrownBy(() -> teamService.getTeam(teamId))
         .isInstanceOf(NotFoundException.class)
@@ -164,11 +165,11 @@ public class TeamServiceTests {
   @DisplayName("Should throw an exception when try to delete a team with a teamId not found")
   @Test
   public void deleteTeamWithTeamIdNotFound() {
-    ObjectId teamId = TEAM_ID;
+    String teamId = TEAM_NAME;
 
     when(messageError.create(any(), any())).thenReturn(apiError);
 
-    when(teamRepository.findBy_id(teamId)).thenReturn(Optional.empty());
+    when(teamRepository.findByTeamName(teamId)).thenReturn(Optional.empty());
 
     assertThatThrownBy(() -> teamService.deleteTeam(teamId))
         .isInstanceOf(NotFoundException.class)
@@ -178,11 +179,11 @@ public class TeamServiceTests {
   @DisplayName("Should throw an exception when try to update a team with a teamId not found")
   @Test
   public void updateTeamWithTeamIdNotFound() {
-    ObjectId teamId = TEAM_ID;
+    String teamId = TEAM_NAME;
 
     when(messageError.create(any(), any())).thenReturn(apiError);
 
-    when(teamRepository.findBy_id(teamId)).thenReturn(Optional.empty());
+    when(teamRepository.findByTeamName(teamId)).thenReturn(Optional.empty());
 
     assertThatThrownBy(() -> teamService.patchTeam(teamId, teamPatch))
         .isInstanceOf(NotFoundException.class)

@@ -25,6 +25,7 @@ public class PokemonServiceImp implements PokemonService {
 
   @Override
   public TeamDocument saveTeamSchema(TeamPost teamPost) {
+    String teamName = teamPost.getTeamName();
     Pokemon firstPokemon =
         this.pokemonRepository
             .findByPokemonName(teamPost.getFirstPokemon().toLowerCase())
@@ -51,6 +52,7 @@ public class PokemonServiceImp implements PokemonService {
             .toPokemon();
 
     return TeamDocument.builder()
+        .teamName(teamName)
         .firstPokemon(firstPokemon)
         .secondPokemon(secondPokemon)
         .thirdPokemon(thirdPokemon)

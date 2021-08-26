@@ -26,6 +26,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
 public class PokemonApiTests {
+  private static String TEAM_NAME;
   private static String FIRST_POKEMON;
   private static String SECOND_POKEMON;
   private static String THIRD_POKEMON;
@@ -42,6 +43,7 @@ public class PokemonApiTests {
 
   @BeforeAll
   public static void beforeAll() {
+    TEAM_NAME = "TESTE";
     FIRST_POKEMON = "Squirtle";
     SECOND_POKEMON = "Charmander";
     THIRD_POKEMON = "Bulbasaur";
@@ -56,6 +58,7 @@ public class PokemonApiTests {
     pokemonList = new ArrayList<>();
       teamPost = spy(
             new TeamPost(
+                    TEAM_NAME,
                     FIRST_POKEMON,
                     SECOND_POKEMON,
                     THIRD_POKEMON,

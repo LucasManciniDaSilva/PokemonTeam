@@ -20,6 +20,8 @@ import java.util.List;
 public class TeamPost {
 
   @NotNull
+  private String teamName;
+  @NotNull
   private String firstPokemon;
   @NotNull private String secondPokemon;
   @NotNull private String thirdPokemon;

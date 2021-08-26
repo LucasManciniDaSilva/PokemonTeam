@@ -10,11 +10,11 @@ import org.springframework.transaction.annotation.Transactional;
 public interface TeamService {
 
     Team teamPost(TeamPost teamPost);
-    Team getTeam(ObjectId _id);
+    Team getTeam(String teamName);
 
     @Transactional
-    Team patchTeam(ObjectId _id, TeamPatch teamPatch);
+    Team patchTeam(String teamName, TeamPatch teamPatch);
 
     @Transactional
-    void deleteTeam(ObjectId _id);
+    void deleteTeam(String teamName);
 }

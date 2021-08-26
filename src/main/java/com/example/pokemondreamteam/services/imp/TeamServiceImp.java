@@ -3,6 +3,7 @@ package com.example.pokemondreamteam.services.imp;
 import com.example.pokemondreamteam.documents.TeamDocument;
 import com.example.pokemondreamteam.exceptions.MessageError;
 import com.example.pokemondreamteam.exceptions.NotFoundException;
+import com.example.pokemondreamteam.exceptions.UnprocessableEntityException;
 import com.example.pokemondreamteam.integration.PokemonApi;
 import com.example.pokemondreamteam.interfaces.Messages;
 import com.example.pokemondreamteam.interfaces.json.Team.Team;
@@ -46,6 +47,8 @@ public class TeamServiceImp implements TeamService {
   @Transactional
   public Team teamPost(TeamPost teamPost) {
 
+    validateTeamExists(teamPost.getTeamName());
+
     List<String> teamPostList = teamPost.teamPostList(teamPost);
 
     pokemonApi.verifyPokemon(teamPostList);
@@ -58,19 +61,19 @@ public class TeamServiceImp implements TeamService {
   }
 
   @Override
-  public Team getTeam(ObjectId _id) {
-    return getTeamDocumentById(_id).toTeam();
+  public Team getTeam(String teamName) {
+    return getTeamDocumentByTeamName(teamName).toTeam();
   }
 
   @Override
   @Transactional
-  public Team patchTeam(ObjectId _id, TeamPatch teamPatch) {
+  public Team patchTeam(String teamName, TeamPatch teamPatch) {
 
     List<String> teamPatchList = teamPatch.teamPatchList(teamPatch);
 
     pokemonApi.verifyPokemon(teamPatchList);
 
-    TeamDocument teamDocument = this.getTeamDocumentById(_id);
+    TeamDocument teamDocument = this.getTeamDocumentByTeamName(teamName);
 
     pokemonService.updateTeam(teamDocument, teamPatchList);
 
@@ -81,20 +84,27 @@ public class TeamServiceImp implements TeamService {
 
   @Override
   @Transactional
-  public void deleteTeam(ObjectId _id) {
+  public void deleteTeam(String teamName) {
 
-    TeamDocument teamDocument = getTeamDocumentById(_id);
+    TeamDocument teamDocument = getTeamDocumentByTeamName(teamName);
 
     this.teamRepository.delete(teamDocument);
   }
 
-  private TeamDocument getTeamDocumentById(ObjectId _id) {
+  private TeamDocument getTeamDocumentByTeamName(String teamName) {
     return this.teamRepository
-        .findBy_id(_id)
+        .findByTeamName(teamName)
         .orElseThrow(
             () ->
                 new NotFoundException(
                     this.messageError.create(Messages.POKEMON_TEAM_NOT_FOUND),
-                    MessageFormat.format("Pokemon Team Not Found -> pokemonTeam={0}",  _id)));
+                    MessageFormat.format("Pokemon Team Not Found -> pokemonTeam={0}",  teamName)));
+  }
+
+  private void validateTeamExists(String teamName) {
+          if(this.teamRepository.existsByTeamName(teamName)){
+              throw new UnprocessableEntityException(
+                      messageError.create(Messages.POKEMON_TEAM_EXISTS,teamName));
+            };
   }
 }

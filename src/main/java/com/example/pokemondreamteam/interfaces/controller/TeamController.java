@@ -36,30 +36,30 @@ public class TeamController implements BaseController<Team> {
 
     HttpHeaders teamId = new HttpHeaders();
 
-    teamId.set("_id", teamResponse.get_id().toString());
+    teamId.set("teamName", teamResponse.getTeamName());
 
 
     return ResponseEntity.status(HttpStatus.CREATED).headers(teamId).body(null);
   }
 
-  @GetMapping("/{_id}")
+  @GetMapping("/{teamName}")
   public ResponseEntity<Team> getTeam(
-          @PathVariable ObjectId _id) {
-    return ok(this.teamService.getTeam(_id));
+          @PathVariable String teamName) {
+    return ok(this.teamService.getTeam(teamName));
   }
 
-  @PatchMapping("/{_id}")
+  @PatchMapping("/{teamName}")
   public ResponseEntity<Team> patchTeam(
-          @PathVariable ObjectId _id,
+          @PathVariable String teamName,
           @RequestBody @Valid TeamPatch teamPatch
   ) {
-    this.teamService.patchTeam(_id, teamPatch);
+    this.teamService.patchTeam(teamName, teamPatch);
     return ResponseEntity.status(HttpStatus.PARTIAL_CONTENT).body(null);
   }
 
-  @DeleteMapping("/{_id}")
-  public ResponseEntity<Void> deleteTeam(@PathVariable ObjectId _id) {
-    this.teamService.deleteTeam(_id);
+  @DeleteMapping("/{teamName}")
+  public ResponseEntity<Void> deleteTeam(@PathVariable String teamName) {
+    this.teamService.deleteTeam(teamName);
     return noContent();
   }
 

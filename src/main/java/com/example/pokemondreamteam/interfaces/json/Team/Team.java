@@ -21,8 +21,7 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Team {
 
-    @JsonSerialize(using= ToStringSerializer.class)
-    private ObjectId _id;
+    private String teamName;
     private Pokemon firstPokemon;
     private Pokemon secondPokemon;
     private Pokemon thirdPokemon;
