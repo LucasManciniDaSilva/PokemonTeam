@@ -18,6 +18,7 @@ import javax.validation.Valid;
 
 @RestController
 @Controller
+@CrossOrigin
 @RequestMapping(path = "/team")
 @Validated
 public class TeamController implements BaseController<Team> {
