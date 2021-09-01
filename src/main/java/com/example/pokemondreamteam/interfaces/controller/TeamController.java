@@ -55,7 +55,7 @@ public class TeamController implements BaseController<Team> {
           @RequestBody @Valid TeamPatch teamPatch
   ) {
     this.teamService.patchTeam(teamName, teamPatch);
-    return ResponseEntity.status(HttpStatus.PARTIAL_CONTENT).body(null);
+    return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
   }
 
   @DeleteMapping("/{teamName}")

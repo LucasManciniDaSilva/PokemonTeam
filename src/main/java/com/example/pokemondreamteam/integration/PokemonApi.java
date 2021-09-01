@@ -2,6 +2,7 @@ package com.example.pokemondreamteam.integration;
 
 import com.example.pokemondreamteam.documents.PokemonDocument;
 import com.example.pokemondreamteam.exceptions.MessageError;
+import com.example.pokemondreamteam.exceptions.NotFoundException;
 import com.example.pokemondreamteam.exceptions.UnprocessableEntityException;
 import com.example.pokemondreamteam.interfaces.Messages;
 import com.example.pokemondreamteam.interfaces.json.Pokemons.PokemonResponse;
@@ -86,7 +87,7 @@ public class PokemonApi {
     return exception.flatMap(
         ex ->
             Mono.error(
-                new UnprocessableEntityException(
+                new NotFoundException(
                     messageError.create(Messages.POKEMON_NOT_FOUND),
                     MessageFormat.format("Pokemon Not Found. Check your team.", response))));
   }
